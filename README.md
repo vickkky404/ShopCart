@@ -1,61 +1,107 @@
-![Shopping Time](https://raw.githubusercontent.com/catherineisonline/shopping-time/main/src/assets/images/project-preview.webp)
+# 🛍️ ShopCart - Modern E-Commerce React Application
 
-# [Shopping Time](https://shopping-time.vercel.app/)
-Shopping Time is an e-commerce website that has at least 150 women's clothing products with different sizes and color choices. You can choose various attributes like size and color. There is a cart where you can see added items and edit, add, or remove them. You can also set a currency of your choice.
+A full-featured e-commerce fashion web application built with **React 19**, **Vite**, and **React Router 7**. The project includes a catalog of over 150+ women's clothing items and footwear, category filtering, attribute selection (size & color), interactive cart overlay, multi-currency conversion, and a multi-step validated checkout process.
 
-## Functionality Overview
-Below is a comprehensive overview of the functionalities that the website offers:
+![ShopCart Preview](./src/assets/images/project-preview.webp)
 
-### Managing Your Cart
-- Add and Remove Products: The website allows you to easily add products to your shopping cart with just a few clicks. You can also remove items from your cart when you change your mind or no longer wish to purchase them.
+---
 
-- Adjust Quantity: In addition to adding and removing items, you have the flexibility to change the quantity of products in your cart. Whether you want one more of your favorite item or need to reduce the quantity, it's a breeze.
+## ✨ Features & Functionality
 
-- Cart Overlay: There is a convenient cart overlay that displays a summary of the items currently in your cart. This allows you to keep track of your selected items without navigating away from your shopping experience.
+### 1. 👗 Catalog & Category Filtering
+- **Category Browsing**: Filter through **Dresses**, **Blouses**, **Jeans**, and **Shoes**, or browse the **All Products** collection.
+- **Product Details**: View product images, descriptions, pricing, brand tags, and attribute options.
+- **Responsive Layout**: Designed for mobile, tablet, and desktop screens with smooth transitions and hover states.
 
-- Product Attributes: When reviewing your cart or cart overlay, you'll find detailed information about each product, including selected size and other relevant attributes. This ensures you have a clear understanding of your choices before proceeding to checkout.
+### 2. 🛒 Shopping Cart & Overlay
+- **Quick Add to Cart**: Add items directly from the catalog with size and color attribute selection.
+- **Cart Overlay Drawer**: Preview cart contents anytime without leaving your current page.
+- **Quantity Adjustment**: Increment or decrement quantities (+ / -) or remove items entirely.
+- **Tax & Total Calculations**: Real-time computation of subtotals and 21% taxes.
 
-### Streamlined Shopping
-- Category Filtering: The website makes it easy to find products within your preferred categories. You can filter products by various categories, making it simple to locate exactly what you're looking for.
+### 3. 💱 Multi-Currency Support
+- Switch seamlessly between currencies with live converted amounts:
+  - **USD** ($)
+  - **EUR** (€)
+  - **GBP** (£)
+  - **AUD** (A$)
+  - **JPY** (¥)
+  - **RUB** (₽)
 
-- Category and Product Page Shopping: Whether you prefer browsing by category or exploring individual product pages, you can add products to your cart from both locations. The website offers a seamless shopping experience to cater to your preferences.
+### 4. 📝 Multi-Step Checkout & Form Validation
+- **Step 1: Personal Details**: Name, email, and phone validation.
+- **Step 2: Shipping Address**: Country, city, postal code, and street address validation.
+- **Step 3: Payment**: Card number, expiry date, and CVV checks.
+- **Order Summary**: Confirmation screen with order number, receipt printing, and order breakdown.
 
-- Attribute Selection: To maintain accuracy and prevent errors, you won't be able to add products to your cart until you've selected necessary attributes like size or color. This ensures that the items you receive are exactly what you expect.
+---
 
-### Flexible Currency Options
-- Currency Selection: The customers come from diverse locations around the world. That's why the website offers the flexibility to change the store currency to various options such as EUR, GBP, AUD, JPY, and more. Shop in the currency that suits you best.
+## 🛠️ Tech Stack
 
-### Secure and User-Friendly Checkout
-- Multi-Step Checkout: The website features a multi-step checkout process to guide you through the purchase smoothly and securely. Each step is designed with user experience in mind.
+- **Frontend**: React 19, JavaScript (ES6+)
+- **Build Tool**: Vite 6
+- **Routing**: React Router DOM 7
+- **Styling**: Vanilla CSS (Custom Design System with CSS variables)
+- **Utilities**: UUID for order generation, React Simple Image Slider
 
-- Form Validations: To prevent errors and ensure accurate order information, the checkout page includes form validations. This guarantees that the necessary details are correctly entered, helping to streamline shopping experience.
+---
 
-## Goals I achieved
-- Practice React Class components and then refactor to hooks
-- Build logic to choose attributes and add items to the cart
-- Add form validations
-- Use Firebase to save data externally
+## 🚀 Getting Started
 
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or pnpm
 
-## Getting Started
+### Installation
 
-To get started you need to:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/vickkky404/ShopCart.git
+   cd ShopCart
+   ```
 
-1. Clone the project
-2. pnpm install
-3. Install listed dependencies
-4. Use available scripts, like pnpm start
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Dependencies | APIs | Services 
+3. **Start the local development server:**
+   ```bash
+   npm run dev
+   ```
 
-- [React Router](https://www.npmjs.com/package/react-router-dom)
-- [React Slider](https://www.npmjs.com/package/react-simple-image-slider)
-- [uuid](https://www.npmjs.com/package/uuid)
-- [Firestore](https://firebase.google.com/docs/firestore)
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
 
-## Contribution <a id="contribution"></a>
+---
 
-This project serves as a personal portfolio website to show off my personal skills. I do not accept any contributions like pull requests to this project however if you have any suggestions or ideas feel free to contact me or submit an idea in the [discussions](https://github.com/catherineisonline/shopping-time/discussions). Otherwise, you are free to fork this project and change it for your own purposes. 
+## 📁 Project Structure
 
-## License  <a id="license"></a>
-This project is released under the MIT [LICENSE](https://github.com/catherineisonline/shopping-time/blob/main/LICENSE). You can find the specific terms and conditions outlined in the LICENSE file. This means you're free to utilize, modify, and distribute the project according to the terms of the MIT License.
+```
+ShopCart/
+├── public/                 # Static assets & favicons
+├── src/
+│   ├── assets/             # Images, icons, banners
+│   ├── components/         # Reusable UI components
+│   │   ├── attributes/     # Size & color attribute pickers
+│   │   ├── cart-overlay/   # Slide-out cart drawer
+│   │   ├── currency-overlay/# Currency switcher dropdown
+│   │   ├── footer/         # Page footer
+│   │   └── header/         # Sticky navigation header
+│   ├── core-ui/            # Global styles, variables, typography
+│   ├── data/               # Catalog dataset (150+ items & currencies)
+│   ├── database/           # Firebase configuration
+│   ├── helpers/            # Navigation and location utilities
+│   ├── routes/             # App views (Landing, Catalog, Product, Cart, Checkout, Order)
+│   ├── App.jsx             # Main router & global state
+│   └── index.jsx           # App entry point
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## 📄 License
+This project is open source and available under the [MIT License](LICENSE).

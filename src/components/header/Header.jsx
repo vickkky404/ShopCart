@@ -8,7 +8,8 @@ import "./header.css";
 import inactiveHamburger from "../../assets/images/inactive-hamburger.png";
 import activeHamburger from "../../assets/images/active-hamburger.png";
 
-const Navigation = ({ allCategories,
+const Navigation = ({
+  allCategories,
   changeCategory,
   activeCategory,
   selectedCurrency,
@@ -19,55 +20,46 @@ const Navigation = ({ allCategories,
   productsQuantity,
   handleRemoveProduct,
   handleAddProduct,
-  cartItems, clearCart, }) => {
-
+  cartItems,
+  clearCart,
+}) => {
   const [activeMenu, setActiveMenu] = useState(false);
 
   const toggleMenu = () => {
     setActiveMenu(!activeMenu);
-  }
+  };
   const closeMenu = () => setActiveMenu(false);
 
   return (
-    <header>
-      <section className="icons-section-active">
-        <CurrencyIcon
-          selectedCurrency={selectedCurrency}
-          allCurrencies={allCurrencies}
-          changeCurrency={changeCurrency}
-        />
-
-        <CartIcon
-          handleRemoveProduct={handleRemoveProduct}
-          handleAddProduct={handleAddProduct}
-          productsQuantity={productsQuantity}
-          amountOfItems={amountOfItems}
-          totalPayment={totalPayment}
-          cartItems={cartItems}
-          selectedCurrency={selectedCurrency}
-          activeMenu={activeMenu}
-          clearCart={clearCart}
-          setActiveMenu={setActiveMenu}
-          toggleMenu={toggleMenu}
-        />
-        <img className="hamburger" width={50} height={50} src={activeMenu ? activeHamburger : inactiveHamburger} alt="toggle menu" onClick={toggleMenu} />
-      </section>
-      <nav className={activeMenu ? "active-menu" : ""}>
+    <header className="site-header">
+      <div className="header-top-bar">
+        <p>🎉 Welcome to Shopping Time — Free delivery on orders over $50! ✨</p>
+      </div>
+      <div className="header-container">
         <NavLink
           to="/"
           onClick={() => {
             changeCategory("");
             closeMenu();
           }}
-          className="header-one">
-          <h1>Shopping Time</h1>
+          className="header-brand"
+        >
+          <span className="brand-logo-icon">🛍️</span>
+          <div className="brand-names">
+            <h1 className="brand-title">Shopping Time</h1>
+            <span className="brand-badge">Student Boutique</span>
+          </div>
         </NavLink>
-        <CategoryMenu
-          allCategories={allCategories}
-          changeCategory={changeCategory}
-          activeCategory={activeCategory}
-          closeMenu={closeMenu}
-        />
+
+        <nav className={`header-nav ${activeMenu ? "active-menu" : ""}`}>
+          <CategoryMenu
+            allCategories={allCategories}
+            changeCategory={changeCategory}
+            activeCategory={activeCategory}
+            closeMenu={closeMenu}
+          />
+        </nav>
+
         <section className="icons-section">
           <CurrencyIcon
             selectedCurrency={selectedCurrency}
@@ -88,12 +80,20 @@ const Navigation = ({ allCategories,
             setActiveMenu={setActiveMenu}
             toggleMenu={toggleMenu}
           />
+
+          <img
+            className="hamburger"
+            width={36}
+            height={36}
+            src={activeMenu ? activeHamburger : inactiveHamburger}
+            alt="toggle menu"
+            onClick={toggleMenu}
+          />
         </section>
-      </nav>
+      </div>
       <SuccessMessage />
     </header>
   );
-}
-
+};
 
 export default Navigation;

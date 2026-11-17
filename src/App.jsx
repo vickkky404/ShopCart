@@ -10,12 +10,14 @@ import NotFound from "./routes/not-found/NotFound.jsx";
 import Order from "./routes/order/Order.jsx";
 import products_database from "./database/firebase.js"
 import { collection, getDocs } from 'firebase/firestore/lite';
+import Footer from "./components/footer/Footer.jsx";
+import { currenciesObj, itemsObj } from "./data/all-products.js";
 
 const App = () => {
-  const [activeCategory, setActiveCategory] = useState('');
-  const [allCurrencies, setAllCurrencies] = useState([]);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [allCurrencies, setAllCurrencies] = useState(currenciesObj);
   const [selectedCurrency, setSelectedCurrency] = useState('$');
-  const [allProducts, setAllProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState(itemsObj);
   const [cartItems, setCartItems] = useState([]);
   const [totalPayment, setTotalPayment] = useState(0);
   const [taxes, setTaxes] = useState(0);
@@ -57,10 +59,17 @@ const App = () => {
   }, [cachedProducts]);
 
   const retrieveProducts = async (db) => {
-    const all_products_col = collection(db, 'products');
-    const productsSnapshot = await getDocs(all_products_col);
-    const all_products = productsSnapshot.docs.map(doc => doc.data());
-    return all_products;
+    try {
+      const all_products_col = collection(db, 'products');
+      const productsSnapshot = await getDocs(all_products_col);
+      const all_products = productsSnapshot.docs.map(doc => doc.data());
+      if (all_products && all_products.length > 0) {
+        return all_products;
+      }
+    } catch (error) {
+      console.warn('Firebase products unavailable, using local catalog data:', error);
+    }
+    return itemsObj;
   }
 
   useEffect(() => {
@@ -121,11 +130,13 @@ const App = () => {
       const all_currencies_col = collection(db, 'currencies');
       const currenciesSnapshot = await getDocs(all_currencies_col);
       const all_currencies = currenciesSnapshot.docs.map(doc => doc.data());
-      return all_currencies;
+      if (all_currencies && all_currencies.length > 0) {
+        return all_currencies;
+      }
     } catch (error) {
-      console.error('Error retrieving currencies from Firebase:', error);
-      return [];
+      console.warn('Firebase currencies unavailable, using local currencies:', error);
     }
+    return currenciesObj;
   }
 
   useEffect(() => {
@@ -377,19 +388,37 @@ const App = () => {
           path="/"
           element={<Landing changeCategory={changeCategory} />}
         />
-        <Route
-          path={`/store/${activeCategory}`}
-          element={
-            <AllProducts
-              allProducts={allProducts}
-              activeCategory={activeCategory}
-              selectedCurrency={selectedCurrency}
-              handleAddProduct={handleAddProduct}
-              alertMessageMain={alertMessageMain}
-              isLoading={isLoading}
-            />
-          }
-        />
+        {['all', 'dresses', 'blouses', 'jeans', 'shoes'].map((cat) => (
+          <Route
+            key={cat}
+            path={`/store/${cat}`}
+            element={
+              <AllProducts
+                allProducts={allProducts.length > 0 ? allProducts : itemsObj}
+                activeCategory={cat}
+                selectedCurrency={selectedCurrency}
+                handleAddProduct={handleAddProduct}
+                alertMessageMain={alertMessageMain}
+                isLoading={isLoading}
+              />
+            }
+          />
+        ))}
+        {activeCategory && !['all', 'dresses', 'blouses', 'jeans', 'shoes'].includes(activeCategory) && (
+          <Route
+            path={`/store/${activeCategory}`}
+            element={
+              <AllProducts
+                allProducts={allProducts.length > 0 ? allProducts : itemsObj}
+                activeCategory={activeCategory}
+                selectedCurrency={selectedCurrency}
+                handleAddProduct={handleAddProduct}
+                alertMessageMain={alertMessageMain}
+                isLoading={isLoading}
+              />
+            }
+          />
+        )}
         <Route
           path={`/store/:id`}
           element={
@@ -397,7 +426,7 @@ const App = () => {
               selectedCurrency={selectedCurrency}
               handleAddProduct={handleAddProduct}
               alertMessageMain={alertMessageMain}
-              allProducts={allProducts}
+              allProducts={allProducts.length > 0 ? allProducts : itemsObj}
             />
           }
         />
@@ -422,6 +451,7 @@ const App = () => {
           <NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer changeCategory={changeCategory} />
     </BrowserRouter>
   );
 }

@@ -89,7 +89,7 @@ const Product = ({
           ></div>
         </div>
       </Link>
-      <div>
+      <div className="product-card-details">
         <p className="brand-name">
           {item.brand} {item.name}
         </p>
